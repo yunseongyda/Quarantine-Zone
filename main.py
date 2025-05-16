@@ -123,8 +123,8 @@ def draw_recipe(recipe):
     x, y = 20, 320
     for ingredient in reversed(recipe):
         color = ingredient_colors.get(ingredient, WHITE)
-        pygame.draw.circle(screen, color, (x, y), 20)
-        pygame.draw.circle(screen, WHITE, (x, y), 20, 2)
+        pygame.draw.circle(screen, color, (x, y), 30)
+        pygame.draw.circle(screen, WHITE, (x, y), 30, 2)
         y += 50
 
 def get_camera_surface():
@@ -217,12 +217,13 @@ while running:
     draw_status()
 
     for event in pygame.event.get():
+        if event.type == pygame.QUIT :
+                pygame.quit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_c and current_recipe:
                 if cheat_index < len(current_recipe):
                     items_on_screen.insert(0, {"type": current_recipe[cheat_index]})
                     cheat_index += 1
-
     pygame.draw.circle(screen, DARK_GRAY, plate_pos, PLATE_RADIUS)
     for idx, item in enumerate(reversed(items_on_screen)):
         y_offset = -idx * (ITEM_RADIUS // 2)
@@ -249,7 +250,7 @@ while running:
 
     camera_surface = get_camera_surface()
     if camera_surface:
-        screen.blit(camera_surface, (20, 20))
+        screen.blit(camera_surface, (0, 0))
 
     if hand_screen_pos and hand_status == "Fist" and prev_hand_status != "Fist":
         if reset_button_rect.collidepoint(hand_screen_pos):
